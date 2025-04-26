@@ -1,0 +1,282 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Usando Flexbox para centralizar o conteúdo da página */
+body {
+    display: flex;
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    align-items: center;
+    /* Centraliza verticalmente */
+    height: 100vh;
+    /* Ocupa toda a altura da tela */
+    background-image: linear-gradient(55deg, rgb(9, 9, 153), cyan);
+    flex-direction: column;
+    /* Organiza o conteúdo verticalmente */
+    text-align: center;
+    /* Centraliza o texto dentro do body */
+    overflow: hidden;
+}
+
+/* Estilos para o header */
+header {
+    font-family: monospace;
+    background-color: #0a0a0a;
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+    /* Centraliza o texto dentro do header */
+    border-radius: 10px;
+    /* Bordas arredondadas */
+    /* margin botton = Espaço abaixo do header */
+}
+
+h1 {
+    color: #ff9900;
+}
+
+/* Estilizando o nav (se necessário) */
+nav {
+    width: 100%;
+    background-color: #0212ff;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+/* Estilizando o iframe */
+iframe {
+    border: 0;
+    width: 100%;
+    height: 475px;
+    border-radius: 10px;
+    /* Bordas arredondadas para o iframe */
+}
+
+
+.cadastro_entrada button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.cadastro_entrada button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    ;
+
+}
+
+.cadastro_saida button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.cadastro_saida button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    ;
+
+}
+
+.gerenciar button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.gerenciar button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    ;
+
+}
+
+.relatorio button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.relatorio button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+
+}
+
+.cad_func button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.cad_func button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    ;
+}
+
+.editar_func button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.editar_func button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    ;
+}
+
+.editar_func button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.editar_func button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    ;
+}
+
+.remover_func button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.remover_func button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    ;
+}
+
+.cad_vaga button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.cad_vaga button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+
+}
+
+.edit_vaga button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.edit_vaga button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    ;
+}
+
+.remov_vaga button {
+    background-color: #000099;
+    /* cor verde já no estado normal */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.remov_vaga button:hover {
+    transform: scale(1.02);
+    background-color: #0000cc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    ;
+}
