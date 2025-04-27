@@ -12,6 +12,7 @@
         <title>Relatorio do estacionamento</title>
     </head>
     <body>
-        <h1 style="font-family: fantasy">Relatorio</h1>
+        <%
+            %>
     </body>
 </html>
