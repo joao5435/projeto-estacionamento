@@ -13,8 +13,9 @@
             <% 
 
        String placa = request.getParameter("placa");
-boolean placaValida = false;
+       boolean placaValida = false;
 
+    
 
 if (placa != null) {
     placa = placa.toUpperCase().trim();
@@ -54,6 +55,27 @@ if (data_entrada != null && placaValida) {
 } else {
     dataValida = false;
 }
+int vagasDisponiveis = 0;
+try {
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/estacionamento_administrador", "root", "root");
+
+    String sqlVagas = "SELECT vagas_disponiveis FROM vagas WHERE id = 1"; // Aqui, assumindo que há apenas uma vaga para controlar
+    PreparedStatement psVagas = conn.prepareStatement(sqlVagas);
+    ResultSet rs = psVagas.executeQuery();
+
+    if (rs.next()) {
+        vagasDisponiveis = rs.getInt("vagas_disponiveis");
+    }
+    rs.close();
+    psVagas.close();
+    conn.close();
+} catch (Exception e) {
+    out.print("<p style='color:red;'>Erro ao verificar vagas: " + e.getMessage() + "</p>");
+}
+
+                
+
 
 if ("POST".equalsIgnoreCase(request.getMethod()) && placaValida && dataValida) {
     String hora_entrada = request.getParameter("hora_entrada");
@@ -62,7 +84,7 @@ if ("POST".equalsIgnoreCase(request.getMethod()) && placaValida && dataValida) {
         Class.forName("com.mysql.cj.jdbc.Driver");
         String url = "jdbc:mysql://localhost:3306/estacionamento_administrador";
         String user = "root";
-        String password = "";
+        String password = "root";
 
         Connection connecta = DriverManager.getConnection(url, user, password);
         String sql = "INSERT INTO carro (placa, hora_entrada, data_entrada) VALUES (?, ?, ?)";
@@ -73,16 +95,17 @@ if ("POST".equalsIgnoreCase(request.getMethod()) && placaValida && dataValida) {
 
         int linhasAfetadas = ps.executeUpdate();
 
-        if (linhasAfetadas > 0) {
-            if (placa.matches("[A-Z]{3}[0-9]{4}")) {
-                out.print("<p style='font-family: fantasy;'>Placa válida no modelo antigo (ABC1234).</p>");
-            } else if (placa.matches("[A-Z]{3}[0-9]{1}[A-Z]{1}[0-9]{2}")) {
-                out.print("<p style='font-family: fantasy;'>Placa válida no modelo Mercosul (ABC1D23).</p>");
+          if (linhasAfetadas > 0) {
+                // Decrementa a vaga após o cadastro
+                String sqlUpdateVagas = "UPDATE vagas SET vagas_disponiveis = vagas_disponiveis - 1 WHERE id = 1 AND vagas_disponiveis > 0";
+                PreparedStatement psUpdateVagas = connecta.prepareStatement(sqlUpdateVagas);
+                psUpdateVagas.executeUpdate();
+                psUpdateVagas.close();
+
+                out.print("<p style='font-family: fantasy;'>✅ Carro cadastrado com sucesso!</p>");
+            } else {
+                out.print("<p>❌ Erro ao cadastrar o carro.</p>");
             }
-            out.print("<p style='font-family: fantasy;'>✅ Carro cadastrado com sucesso!</p>");
-        } else {
-            out.print("<p>❌ Erro ao cadastrar o carro.</p>");
-        }
 
         ps.close();
         connecta.close();
@@ -92,8 +115,13 @@ if ("POST".equalsIgnoreCase(request.getMethod()) && placaValida && dataValida) {
         } else {
             out.print("<p style='color: red;'>Erro: " + e.getMessage() + "</p>");
         }
-    }
+    
 }
+                }else{  //codigo a ser executado caso nao haja vaga disponivel
+                
+                }
+                
+                
             %>
         </body>
         </html>

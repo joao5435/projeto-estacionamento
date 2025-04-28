@@ -18,7 +18,7 @@
                  PreparedStatement st;
                  String url="jdbc:mysql://localhost:3306/estacionamento_administrador";
                  String user="root";
-                 String password=""; //COLOCAR ROOT
+                 String password="root"; //COLOCAR ROOT
                  conecta = DriverManager.getConnection(url, user, password);
                 //Listar os dados da tabela carro do banco de dados
                 String sql=("SELECT * FROM carro");

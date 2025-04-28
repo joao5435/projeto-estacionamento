@@ -23,7 +23,7 @@
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/estacionamento_administrador";
             String user = "root";
-            String password = ""; //SEMPRE COLOCAR O ROOT
+            String password = "root"; //SEMPRE COLOCAR O ROOT
             
             Connection connecta;
   
