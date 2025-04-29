@@ -6,11 +6,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href=../operador_css/operador.css>
     </head>
+    
     <body>
         <h1 style="font-family: fantasy">Gerenciar estacionamento</h1>
          <div class="gerencia_carro">         
              <form method="post">
+                 
+                 
                  <%
                  try {
                  //fazer conexão com o banco de dados

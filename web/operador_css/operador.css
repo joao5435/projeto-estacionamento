@@ -44,3 +44,24 @@
                 .botao_saida:hover {
                     transform: scale(1.04);
                 }
+                
+               .gerencia_carro {
+                    background-color: rgba(240, 237, 237, 0.801);
+                    font-family: fantasy;
+                    padding: 20px;
+                    border-radius: 20px;
+                }
+                
+                .Excluir a {
+                    color: #e60000; /* vermelho */
+                    text-decoration: none;
+                    font-weight: bold;
+                }
+
+                .Excluir a:visited {
+                    color: #e60000; /* mantém vermelho mesmo depois de clicar */
+                }
+
+                .Excluir a:hover {
+                    text-decoration: underline;
+                }

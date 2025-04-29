@@ -19,7 +19,7 @@
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 String url="jdbc:mysql://localhost:3306/estacionamento_administrador";
                 String user = "root";
-                String password = "";
+                String password = "root";
                 connecta = DriverManager.getConnection(url,user,password);
                 
                 String sql = "DELETE FROM carro WHERE placa = ?";

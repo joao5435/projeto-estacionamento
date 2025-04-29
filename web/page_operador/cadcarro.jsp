@@ -117,9 +117,7 @@ if ("POST".equalsIgnoreCase(request.getMethod()) && placaValida && dataValida) {
         }
     
 }
-                }else{  //codigo a ser executado caso nao haja vaga disponivel
-                
-                }
+                }       
                 
                 
             %>
