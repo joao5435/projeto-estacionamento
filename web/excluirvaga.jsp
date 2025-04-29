@@ -26,26 +26,22 @@
                 st = connecta.prepareStatement(sql);
                 st.setString(1,placa);
                 int resultado = st.executeUpdate();
-                
                 if (resultado == 0){
                     out.print("Este produto não está cadastrado no banco");
             }else{
-                    out.print(" O produto de codigo =" + placa+ " , foi excluido com sucesso");
+                    out.print("O carro da placa: " + placa+ " , foi excluido com sucesso");
             }
             }catch (Exception erro){
                 String mensagemErro = erro.getMessage();
                 out.print( mensagemErro  + "Entre em contato com o administrador e informe o erro");
             }
+            
             %>
             
             <h1> Obrigado pela consulta</h1>
             
     </body>
 </html>
-            
-            
-            
-            
-            %>
+     
     </body>
 </html>
