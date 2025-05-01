@@ -280,3 +280,8 @@ iframe {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     ;
 }
+
+/* descobri que nao há necessidade de criar uma classe para cada botao diferente, 
+para que o usuario posso clicar, 
+não vou mudar por preguiça e ser muita coisa, 
+mas fica como observação :/ */
