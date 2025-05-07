@@ -45,30 +45,22 @@
                     transform: scale(1.04);
                 }
                 
-               
-
-                table {
+                
+                   .gerencia_carro table {
                     width: 100%;
                     border-collapse: collapse;
-                    margin-top: 20px;
                     font-family: fantasy;
                 }
 
-                th, td {
-                    padding: 10px;
-                    border: 1px solid #ccc;
-                    text-align: center;
-                }
+            .gerencia_carro th, .gerencia_carro td {
+                border: 1px solid #ccc;
+                padding: 10px;
+                text-align: center;
+            }
 
-                th {
-                    background-color: #f0f0f0;
-                    color: #333;
+                .gerencia_carro th, td {
+                    background-color: #ddd;
                 }
-
-                tr:nth-child(even) {
-                    background-color: #fdfdfd;
-                }
-
                 .Excluir a {
                     color: #e60000; /* vermelho */
                     text-decoration: none;
