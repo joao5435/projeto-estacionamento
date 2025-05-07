@@ -32,6 +32,7 @@ if (data_entrada != null && hora_entrada != null && placaValida) {
     try {
         LocalDate dataAtual = LocalDate.now();
         LocalDate dataEntrada = LocalDate.parse(data_entrada);
+        
 
         if (!dataEntrada.equals(dataAtual)) {
             out.print("<p style='color:red;'>Erro: A data de entrada deve ser o dia de hoje.</p>");
@@ -64,9 +65,10 @@ try {
         String dataHoraEntradaStr = data_entrada + "T" + hora_entrada;
         Timestamp entrada = Timestamp.valueOf(LocalDateTime.parse(dataHoraEntradaStr));
 
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO carro (placa, data_entrada) VALUES (?, ?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO carro (placa, data_entrada, hora_entrada) VALUES (?, ?, ?)");
         ps.setString(1, placa);
         ps.setTimestamp(2, entrada);
+        ps.setTimestamp(3, entrada);
 
         int resultado = ps.executeUpdate();
 
@@ -75,7 +77,7 @@ try {
             psUpdate.executeUpdate();
             psUpdate.close();
 
-            out.print("<p style='color:green;'>✅ Carro cadastrado com sucesso!</p>");
+            out.print("<p>✅ Carro cadastrado com sucesso!</p>");
         } else {
             out.print("<p style='color:red;'>❌ Erro ao cadastrar.</p>");
         }

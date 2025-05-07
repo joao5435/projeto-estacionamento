@@ -13,14 +13,15 @@
     String placa = request.getParameter("placa");
     String data_saida = request.getParameter("data_saida");   // Ex: 2025-05-05
     String hora_saida = request.getParameter("hora_saida");   // Ex: 17:40
-    String pagamento = request.getParameter("pagamento");
+    String forma_pagamento = request.getParameter("pagamento");
 
-    if (placa != null && data_saida != null && hora_saida != null && pagamento != null) {
+    if (placa != null && data_saida != null && hora_saida != null && forma_pagamento != null) {
         placa = placa.toUpperCase().trim();
 
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/estacionamento_administrador", "root", "root");
 
+            // Buscar data_entrada do carro
             PreparedStatement psBusca = conn.prepareStatement("SELECT data_entrada FROM carro WHERE placa = ? AND hora_saida IS NULL");
             psBusca.setString(1, placa);
             ResultSet rs = psBusca.executeQuery();
@@ -29,12 +30,10 @@
                 Timestamp entradaTS = rs.getTimestamp("data_entrada");
                 LocalDateTime entrada = entradaTS.toLocalDateTime();
 
-                // Combina data + hora e converte para Timestamp
                 String dataHoraSaidaStr = data_saida + "T" + hora_saida;
                 LocalDateTime saida = LocalDateTime.parse(dataHoraSaidaStr);
                 Timestamp saidaTimestamp = Timestamp.valueOf(saida);
 
-                // Calcula o valor
                 long minutos = ChronoUnit.MINUTES.between(entrada, saida);
                 long horas = minutos / 60;
                 if (minutos % 60 != 0) horas++;
@@ -44,29 +43,43 @@
                     preco_total += (horas - 1) * 9.0;
                 }
 
-                // Atualiza os dados
-                PreparedStatement psUpdate = conn.prepareStatement(
-                    "UPDATE carro SET data_saida = ?, hora_saida = ?, valor_pago = ?, forma_pagamento = ? WHERE placa = ?"
-                );
-                psUpdate.setTimestamp(1, saidaTimestamp); // data_saida
-                psUpdate.setTimestamp(2, saidaTimestamp); // hora_saida
-                psUpdate.setDouble(3, preco_total);
-                psUpdate.setString(4, pagamento);
-                psUpdate.setString(5, placa);
+                // Buscar ID da forma de pagamento
+                PreparedStatement psPag = conn.prepareStatement("SELECT id FROM pagamento WHERE forma_pagamento = ?");
+                psPag.setString(1, forma_pagamento);
+                ResultSet rsPag = psPag.executeQuery();
 
-                int atualizado = psUpdate.executeUpdate();
+                if (rsPag.next()) {
+                    int pagamentoId = rsPag.getInt("id");
 
-                if (atualizado > 0) {
-                    PreparedStatement psVaga = conn.prepareStatement("UPDATE vagas SET vagas_disponiveis = vagas_disponiveis + 1 WHERE id = 1");
-                    psVaga.executeUpdate();
-                    psVaga.close();
+                    // Atualiza carro com ID da forma de pagamento
+                    PreparedStatement psUpdate = conn.prepareStatement(
+                        "UPDATE carro SET data_saida = ?, hora_saida = ?, valor_pago = ?, forma_pagamento = ? WHERE placa = ?"
+                    );
+                    psUpdate.setTimestamp(1, saidaTimestamp); // data_saida
+                    psUpdate.setTimestamp(2, saidaTimestamp); // hora_saida
+                    psUpdate.setDouble(3, preco_total);
+                    psUpdate.setInt(4, pagamentoId); // agora vai o ID da forma de pagamento
+                    psUpdate.setString(5, placa);
 
-                    out.print("<p style='color:green;'>✅ Saída registrada. Valor: R$ " + String.format("%.2f", preco_total) + "</p>");
+                    int atualizado = psUpdate.executeUpdate();
+
+                    if (atualizado > 0) {
+                        PreparedStatement psVaga = conn.prepareStatement("UPDATE vagas SET vagas_disponiveis = vagas_disponiveis + 1 WHERE id = 1");
+                        psVaga.executeUpdate();
+                        psVaga.close();
+
+                        out.print("<p>✅ Saída registrada. Valor: R$ " + String.format("%.2f", preco_total) + "</p>");
+                    } else {
+                        out.print("<p style='color:red;'>❌ Erro ao registrar saída.</p>");
+                    }
+
+                    psUpdate.close();
                 } else {
-                    out.print("<p style='color:red;'>❌ Erro ao registrar saída.</p>");
+                    out.print("<p style='color:red;'>❌ Forma de pagamento inválida.</p>");
                 }
 
-                psUpdate.close();
+                rsPag.close();
+                psPag.close();
             } else {
                 out.print("<p style='color:red;'>❌ Carro não encontrado ou já saiu.</p>");
             }

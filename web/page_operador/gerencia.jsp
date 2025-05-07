@@ -1,14 +1,19 @@
 <%@page import = "java.sql.*"%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href=../operador_css/operador.css>
+        <link rel="stylesheet" href="../operador_css/operador.css">
     </head>
-    
+    <style>
+    html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+  }
+</style>
     <body>
         <h1 style="font-family: fantasy">Gerenciar estacionamento</h1>
          <div class="gerencia_carro">         
@@ -34,7 +39,9 @@
                 <tr>
                     <th>Placa</th>
                     <th>Data Entrada</th>
+                    <th>Hora Entrada</th>
                     <th>Data Saida</th>
+                    <th>Hora Saida</th>
                     <th>Preço</th>
                 </tr>
                  <%
@@ -49,7 +56,13 @@
                             <%=rs.getString("data_entrada")%>
                     </td>
                     <td align="center">
+                            <%=rs.getString("hora_entrada")%>
+                    </td>
+                    <td align="center">
                             <%=rs.getString("data_saida")%>
+                    </td>
+                    <td align="center">
+                            <%=rs.getString("hora_saida")%>
                     </td>
                     <td align="center">
                             <%=rs.getString("valor_pago")%>
@@ -72,10 +85,7 @@
 
                 }
            %>
-                
+                </form>
                 </div>
-            </form>
-
-        
     </body>
 </html>
