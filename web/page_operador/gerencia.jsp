@@ -6,14 +6,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="../operador_css/operador.css">
-    </head>
-    <style>
+         <style>
     html, body {
     margin: 0;
     padding: 0;
     overflow-x: auto;
   }
-</style>
+    </style>
+    </head>
+   
     <body>
         <h1 style="font-family: fantasy">Gerenciar estacionamento</h1>
          <div class="gerencia_carro">         
@@ -43,6 +44,7 @@
                     <th>Data Saida</th>
                     <th>Hora Saida</th>
                     <th>Preço</th>
+                    <th>Excluir</th>
                 </tr>
                  <%
                     while(rs.next()){

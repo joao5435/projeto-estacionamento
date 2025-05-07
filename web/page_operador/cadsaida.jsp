@@ -40,7 +40,7 @@
 
                 double preco_total = 25.0;
                 if (horas > 1) {
-                    preco_total += (horas - 1) * 9.0;
+                    preco_total += (horas - 1) + 9.0;
                 }
 
                 // Buscar ID da forma de pagamento
