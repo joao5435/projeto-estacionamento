@@ -1,8 +1,6 @@
-<%-- 
-    Document   : editvaga
-    Created on : 1 de mai. de 2025, 01:38:30
-    Author     : João
---%>
+<%@page import="java.sql.*"%>
+<%@page import="java.time.*"%>
+<%@page import="java.time.temporal.ChronoUnit"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,6 +10,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+       
     </body>
 </html>

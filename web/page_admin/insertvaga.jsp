@@ -1,8 +1,6 @@
-<%-- 
-    Document   : insertvaga
-    Created on : 1 de mai. de 2025, 01:39:35
-    Author     : João
---%>
+<%@page import="java.sql.*" %>
+<%@page import="java.time.*" %>
+<%@page import="java.time.format.*" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

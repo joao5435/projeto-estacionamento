@@ -1,10 +1,8 @@
-<%-- 
-    Document   : remov_vaga
-    Created on : 1 de mai. de 2025, 01:34:31
-    Author     : João
---%>
-
+<%@page import="java.sql.*" %>
+<%@page import="java.time.*" %>
+<%@page import="java.time.format.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
