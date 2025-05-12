@@ -34,13 +34,24 @@
                 LocalDateTime saida = LocalDateTime.parse(dataHoraSaidaStr);
                 Timestamp saidaTimestamp = Timestamp.valueOf(saida);
 
+               // Calcula os minutos totais entre a entrada e a saída
                 long minutos = ChronoUnit.MINUTES.between(entrada, saida);
-                long horas = minutos / 60;
-                if (minutos % 60 != 0) horas++;
 
-                double preco_total = 25.0;
+                // Converte minutos em horas
+                long horas = minutos / 60; // Divide para obter a quantidade inteira de horas
+                long minutosRestantes = minutos % 60; // Obtém os minutos restantes
+
+                // Cálculo do preço
+                double preco_total = 25.0; // Primeira hora custa 25 reais
+
+                // Se houver horas adicionais, adiciona R$ 9,00 para cada hora extra
                 if (horas > 1) {
-                    preco_total += (horas - 1) + 9.0;
+                    preco_total += (horas - 1) * 9.0; 
+                }
+
+                // Se houver minutos restantes, significa que é necessário contar a próxima hora completa
+                if (minutosRestantes > 0) {
+                    preco_total += 9.0; // Adiciona R$ 9,00 para os minutos restantes, considerando como mais uma hora
                 }
 
                 // Buscar ID da forma de pagamento
@@ -68,6 +79,15 @@
                         psVaga.executeUpdate();
                         psVaga.close();
 
+                        
+                        
+                          out.println("Data de Entrada: " + entrada);
+                        out.println("Data de Saída: " + saida);
+                        out.println("Minutos entre entrada e saída: " + minutos);
+                        out.println("Horas calculadas: " + horas);
+                        out.println("Preço Total calculado: R$ " + String.format("%.2f", preco_total));
+
+                        
                         out.print("<p>✅ Saída registrada. Valor: R$ " + String.format("%.2f", preco_total) + "</p>");
                     } else {
                         out.print("<p style='color:red;'>❌ Erro ao registrar saída.</p>");
@@ -94,6 +114,5 @@
         out.print("<p style='color:blue;'>Preencha todos os campos.</p>");
     }
 %>
-
 </body>
 </html>
