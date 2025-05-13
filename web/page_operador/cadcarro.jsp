@@ -76,7 +76,8 @@ try {
             PreparedStatement psUpdate = conn.prepareStatement("UPDATE vagas SET vagas_disponiveis = vagas_disponiveis - 1 WHERE id = 1 AND vagas_disponiveis > 0");
             psUpdate.executeUpdate();
             psUpdate.close();
-
+            
+            
             out.print("<p>✅ Carro cadastrado com sucesso!</p>");
         } else {
             out.print("<p style='color:red;'>❌ Erro ao cadastrar.</p>");

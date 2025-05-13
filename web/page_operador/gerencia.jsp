@@ -67,7 +67,7 @@
                             <%=rs.getString("hora_saida")%>
                     </td>
                     <td align="center">
-                            <%=rs.getString("valor_pago")%>
+                        <p> R$ <%=rs.getString("valor_pago")%> </p>
                     </td>
                <!-- <td>
                  // < % aqui sera o codigo para verificar o numero de vagas totais (tire o espaço antes da porcentagem)%>

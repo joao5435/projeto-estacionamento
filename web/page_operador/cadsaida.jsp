@@ -21,37 +21,43 @@
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/estacionamento_administrador", "root", "root");
 
-            // Buscar data_entrada do carro
-            PreparedStatement psBusca = conn.prepareStatement("SELECT data_entrada FROM carro WHERE placa = ? AND hora_saida IS NULL");
+            // Buscar hora_entrada do carro
+            PreparedStatement psBusca = conn.prepareStatement("SELECT hora_entrada FROM carro WHERE placa = ? AND hora_saida IS NULL");
             psBusca.setString(1, placa);
             ResultSet rs = psBusca.executeQuery();
 
             if (rs.next()) {
-                Timestamp entradaTS = rs.getTimestamp("data_entrada");
+                Timestamp entradaTS = rs.getTimestamp("hora_entrada");
                 LocalDateTime entrada = entradaTS.toLocalDateTime();
 
+                // Converte os parâmetros de data e hora de saída para LocalDateTime
                 String dataHoraSaidaStr = data_saida + "T" + hora_saida;
                 LocalDateTime saida = LocalDateTime.parse(dataHoraSaidaStr);
-                Timestamp saidaTimestamp = Timestamp.valueOf(saida);
 
-               // Calcula os minutos totais entre a entrada e a saída
-                long minutos = ChronoUnit.MINUTES.between(entrada, saida);
-
-                // Converte minutos em horas
-                long horas = minutos / 60; // Divide para obter a quantidade inteira de horas
-                long minutosRestantes = minutos % 60; // Obtém os minutos restantes
-
-                // Cálculo do preço
-                double preco_total = 25.0; // Primeira hora custa 25 reais
-
-                // Se houver horas adicionais, adiciona R$ 9,00 para cada hora extra
-                if (horas > 1) {
-                    preco_total += (horas - 1) * 9.0; 
+                // Verifica se a saída é antes da entrada
+                if (saida.isBefore(entrada)) {
+                    out.print("<p style='color:red;'>❌ Erro: A data/hora de saída não pode ser anterior à entrada.</p>");
+                    return;
                 }
 
-                // Se houver minutos restantes, significa que é necessário contar a próxima hora completa
+                Timestamp saidaTimestamp = Timestamp.valueOf(saida);
+
+                // Calcula os minutos totais entre a entrada e a saída
+                long minutos = ChronoUnit.MINUTES.between(entrada, saida);
+
+                // Converte minutos em horas e minutos restantes
+                long horas = minutos / 60;
+                long minutosRestantes = minutos % 60;
+
+                // Cálculo do preço
+                double preco_total = 25.0; // Primeira hora
+
+                if (horas > 1) {
+                    preco_total += (horas - 1) * 9.0;
+                }
+
                 if (minutosRestantes > 0) {
-                    preco_total += 9.0; // Adiciona R$ 9,00 para os minutos restantes, considerando como mais uma hora
+                    preco_total += 9.0; // Nova hora pelo tempo fracionado
                 }
 
                 // Buscar ID da forma de pagamento
@@ -62,33 +68,30 @@
                 if (rsPag.next()) {
                     int pagamentoId = rsPag.getInt("id");
 
-                    // Atualiza carro com ID da forma de pagamento
+                    // Atualiza o carro com os dados de saída
                     PreparedStatement psUpdate = conn.prepareStatement(
                         "UPDATE carro SET data_saida = ?, hora_saida = ?, valor_pago = ?, forma_pagamento = ? WHERE placa = ?"
                     );
                     psUpdate.setTimestamp(1, saidaTimestamp); // data_saida
                     psUpdate.setTimestamp(2, saidaTimestamp); // hora_saida
                     psUpdate.setDouble(3, preco_total);
-                    psUpdate.setInt(4, pagamentoId); // agora vai o ID da forma de pagamento
+                    psUpdate.setInt(4, pagamentoId);
                     psUpdate.setString(5, placa);
 
                     int atualizado = psUpdate.executeUpdate();
 
                     if (atualizado > 0) {
+                        // Libera uma vaga
                         PreparedStatement psVaga = conn.prepareStatement("UPDATE vagas SET vagas_disponiveis = vagas_disponiveis + 1 WHERE id = 1");
                         psVaga.executeUpdate();
                         psVaga.close();
 
-                        
-                        
-                          out.println("Data de Entrada: " + entrada);
-                        out.println("Data de Saída: " + saida);
-                        out.println("Minutos entre entrada e saída: " + minutos);
-                        out.println("Horas calculadas: " + horas);
-                        out.println("Preço Total calculado: R$ " + String.format("%.2f", preco_total));
-
-                        
-                        out.print("<p>✅ Saída registrada. Valor: R$ " + String.format("%.2f", preco_total) + "</p>");
+                        out.println("<h3>✅ Saída registrada com sucesso.</h3>");
+                        out.println("<p><strong>Data de Entrada:</strong> " + entrada + "</p>");
+                        out.println("<p><strong>Data de Saída:</strong> " + saida + "</p>");
+                        out.println("<p><strong>Minutos entre entrada e saída:</strong> " + minutos + "</p>");
+                        out.println("<p><strong>Horas calculadas:</strong> " + horas + "</p>");
+                        out.println("<p><strong>Preço Total:</strong> R$ " + String.format("%.2f", preco_total) + "</p>");
                     } else {
                         out.print("<p style='color:red;'>❌ Erro ao registrar saída.</p>");
                     }
