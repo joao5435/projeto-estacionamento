@@ -85,7 +85,7 @@
                         PreparedStatement psVaga = conn.prepareStatement("UPDATE vagas SET vagas_disponiveis = vagas_disponiveis + 1 WHERE id = 1");
                         psVaga.executeUpdate();
                         psVaga.close();
-
+                        horas = horas + 1; // corrige o numero de horas, pois a primeira não foi considerada 
                         out.println("<h3>✅ Saída registrada com sucesso.</h3>");
                         out.println("<p><strong>Data de Entrada:</strong> " + entrada + "</p>");
                         out.println("<p><strong>Data de Saída:</strong> " + saida + "</p>");
